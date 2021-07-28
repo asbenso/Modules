@@ -1,11 +1,15 @@
 module "vpcnetwork" {
-  source = ".//c/Users/Euroil Ltd/Documents/JJtechdevwork/Atom/JJtechterraform/Modules/VPC"
+  source          = "github.com/asbenso/Modules//VPC"
+  vpname          = var.vpname
+  public_subnets  = var.public_subnets
+  private_subnets = var.private_subnets
+  main_vpc_cidr   = var.main_vpc_cidr
 }
 
 resource "aws_security_group" "allow_tls" {
   name        = "allow_tls"
   description = "Allow TLS inbound traffic"
-  vpc_id      = module.vpcnetwork.Vpc-id
+  subnet_id   = module.vpcnetwork.Public-subnet-id
 
   dynamic "ingress" {
     for_each = var.sg_port
