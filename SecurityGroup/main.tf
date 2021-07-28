@@ -9,7 +9,7 @@ module "vpcnetwork" {
 resource "aws_security_group" "allow_tls" {
   name        = "allow_tls"
   description = "Allow TLS inbound traffic"
-  subnet_id   = module.vpcnetwork.Public-subnet-id
+  vpc_id      = module.vpcnetwork.Vpc-id
 
   dynamic "ingress" {
     for_each = var.sg_port
