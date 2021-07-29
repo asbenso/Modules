@@ -9,7 +9,7 @@ module "securitygroup" {
 resource "aws_instance" "jjtech" {
   ami                         = var.ami_id
   instance_type               = var.instance_type
-  associate_public_ip_address = "true"
+  associate_public_ip_address = true
   subnet_id                   = module.securitygroup.securitygroupsubnetID
   tags = {
     Name = var.name

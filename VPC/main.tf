@@ -1,6 +1,8 @@
-resource "aws_vpc" "Main" {            # Creating VPC here
-  cidr_block       = var.main_vpc_cidr # Defining the CIDR block use 10.0.0.0/24 for demo
-  instance_tenancy = "default"
+resource "aws_vpc" "Main" {                # Creating VPC here
+  cidr_block           = var.main_vpc_cidr # Defining the CIDR block use 10.0.0.0/24 for demo
+  instance_tenancy     = "default"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
   tags = {
     Name = var.vpname
   }
@@ -8,8 +10,9 @@ resource "aws_vpc" "Main" {            # Creating VPC here
 }
 
 resource "aws_subnet" "publicsubnets" { # Creating Public Subnet
-  vpc_id     = aws_vpc.Main.id
-  cidr_block = var.public_subnets # CIDR block of public subnet
+  vpc_id                  = aws_vpc.Main.id
+  cidr_block              = var.public_subnets # CIDR block of public subnet
+  map_public_ip_on_launch = true
   tags = {
     Name = "${var.vpname}-publicsubnets"
   }
