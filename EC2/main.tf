@@ -6,13 +6,16 @@ module "securitygroup" {
   private_subnets = var.private_subnets
   main_vpc_cidr   = var.main_vpc_cidr
 }
-
 resource "aws_instance" "jjtech" {
-  ami             = var.ami_id
-  instance_type   = var.instance_type
-  security_groups = module.securitygroup.securitygroupid
-  subnet_id       = var.public_subnets
+  ami           = var.ami_id
+  instance_type = var.instance_type
+  subnet_id     = var.public_subnets
   tags = {
     Name = var.name
   }
+}
+
+resource "aws_network_interface_sg_attachment" "sg-attachment" {
+  security_group_id    = module.securitygroup.securitygroupid
+  network_interface_id = aws_instance.jjtech.primary_network_interface_id
 }
