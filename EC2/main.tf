@@ -7,9 +7,10 @@ module "securitygroup" {
   main_vpc_cidr   = var.main_vpc_cidr
 }
 resource "aws_instance" "jjtech" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  subnet_id     = module.securitygroup.securitygroupsubnetID
+  ami                         = var.ami_id
+  instance_type               = var.instance_type
+  associate_public_ip_address = "true"
+  subnet_id                   = module.securitygroup.securitygroupsubnetID
   tags = {
     Name = var.name
   }
